@@ -1,0 +1,6 @@
+fileignoreconfig:
+- filename: dist/umi.css
+  checksum: e5a826dc2d1258fa265ffbf34854294faafa616a282904d1aac3a0e83edda93b
+- filename: dist/umi.js
+  checksum: 8fc07d840172683ad4d0757c2ffd220a96c4b04de734541affdcfcd78a1b5f6d
+version: "1.0"
