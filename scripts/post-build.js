@@ -7,6 +7,10 @@ let htmlContent = fs
 
 htmlContent = htmlContent
   .replace('umi.css', 'dist/umi.css')
-  .replace('umi.js', 'dist/umi.js');
+  .replace('umi.js', 'dist/umi.js')
+  .replace(
+    /(?=<link)/,
+    '<link rel="shortcut icon" href="/favicon.ico" />\n\t\t',
+  );
 
 fs.writeFileSync(path.resolve(__dirname, '../index.html'), htmlContent);
