@@ -7,6 +7,49 @@ group:
   title: WebGL基础
 ---
 
+## 初始化着色器
+
+```js
+function createShader(gl, type, source) {
+  const shader = gl.createShader(type);
+  gl.shaderSource(shader, source);
+  gl.compileShader(shader);
+  const compiled = gl.getShaderParameter(shader, gl.COMPILE_STATUS);
+
+  if (!compiled) {
+    const err = gl.getShaderInfoLog(shader);
+    gl.deleteShader(shader);
+
+    throw new Error('compile shader error: ' + err);
+  }
+
+  return shader;
+}
+
+function createProgram(gl, vShader, fShader) {
+  const vertexShader = createShader(gl, gl.VERTEX_SHADER, vShader);
+  const fragShader = createShader(gl, gl.FRAGMENT_SHADER, fShader);
+
+  const program = gl.createProgram();
+  gl.attachShader(program, vertexShader);
+  gl.attachShader(program, fragShader);
+  gl.linkProgram(program);
+
+  const linked = gl.getProgramParameter(program, gl.LINK_STATUS);
+  if (!linked) {
+    const error = gl.getProgramInfoLog(program);
+    gl.deleteProgram(program);
+    gl.deleteShader(vertexShader);
+    gl.deleteShader(fragShader);
+
+    throw new Error('link program error: ' + error);
+  }
+
+  gl.useProgram(program);
+  return program;
+}
+```
+
 ## 创建顶点缓冲区
 
 有时我们需要一次想顶点着色器传递多个顶点的位置信息，使用方法 gl.vertexAttrib[n]f[v]已经不能满足要求，这个时候就需要借助缓冲区，下面的代码展示了如何创建顶点缓冲区并关联到顶点着色器的 attribute 变量：
