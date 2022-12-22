@@ -1,10 +1,11 @@
 ---
+title: 着色器
 nav:
   title: WebGL
   order: 2
+group:
+  title: WebGL基础
 ---
-
-# WebGL
 
 ## 创建顶点缓冲区
 
