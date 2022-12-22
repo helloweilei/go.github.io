@@ -4,7 +4,9 @@ nav:
   order: 2
 ---
 
-# 创建顶点缓冲区
+# WebGL
+
+## 创建顶点缓冲区
 
 有时我们需要一次想顶点着色器传递多个顶点的位置信息，使用方法 gl.vertexAttrib[n]f[v]已经不能满足要求，这个时候就需要借助缓冲区，下面的代码展示了如何创建顶点缓冲区并关联到顶点着色器的 attribute 变量：
 
@@ -30,7 +32,7 @@ function initVertexBuffer(gl, vertices, attribLocation) {
 }
 ```
 
-# 设置片元颜色
+## 设置片元颜色
 
 从顶点着色器到片元着色器会经历两个过程：图形装配、光栅化；
 
