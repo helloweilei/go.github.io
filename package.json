@@ -5,7 +5,8 @@
     "start": "dumi dev",
     "build": "dumi build",
     "prettier": "prettier --write \"**/*.{js,jsx,tsx,ts,less,md,json}\"",
-    "postbuild": "node scripts/post-build.js"
+    "postbuild": "node scripts/post-build.js",
+    "prepare": "husky install"
   },
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -25,6 +26,7 @@
     "dumi": "^1.0.14",
     "lint-staged": "^10.0.7",
     "prettier": "^2.2.1",
-    "yorkie": "^2.0.0"
+    "yorkie": "^2.0.0",
+    "husky": "^7.0.0"
   }
 }
