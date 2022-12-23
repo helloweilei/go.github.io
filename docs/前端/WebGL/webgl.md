@@ -1,10 +1,5 @@
 ---
 title: 着色器
-nav:
-  title: WebGL
-  order: 2
-group:
-  title: WebGL基础
 ---
 
 ## 初始化着色器
