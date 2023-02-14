@@ -1,10 +1,8 @@
 ---
 hero:
-  title: Site Name
-  desc: dumi site app example
+  title: 鸡零狗碎
+  desc: 记录了日常工作和生活中学到了知识和技能，希望对大家也有帮助，有任何问题都欢迎一起探讨！！
   actions:
-    - text: Getting Started
-      link: /getting-started
 features:
   - icon: https://gw.alipayobjects.com/zos/bmw-prod/881dc458-f20b-407b-947a-95104b5ec82b/k79dm8ih_w144_h144.png
     title: Feature 1
@@ -18,4 +16,6 @@ features:
 footer: Open-source MIT Licensed | Copyright © 2020<br />Powered by [dumi](https://d.umijs.org)
 ---
 
-## Hello dumi!
+## 关于我
+
+邮箱： 1060290944@qq.com
