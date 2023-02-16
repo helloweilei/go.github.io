@@ -1,5 +1,5 @@
 ---
-title: Get started
+title: 开始
 ---
 
 ## 简介
