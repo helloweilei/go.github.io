@@ -4,7 +4,7 @@ title: 六边形架构
 
 # 六边形架构
 
-<img src="https://miro.medium.com/max/1400/0*LA1EKjIMhdjB4Nvs" width="80%">
+<img src="./image/hexagon/1676859148094.png" width="600px">
 
 Photo by Giovanni C. Garnica on Unsplash
 
@@ -20,7 +20,7 @@ In 2005, Alistair Cockburn realized that there wasn’t much difference between 
 
 In this article, I will attempt to guide you through the main concepts of the Hexagonal Architecture, its benefits and caveats（警告), and depict（描述) in a simplistic way how you can profit（获益) from this pattern in your projects.
 
-![](https://miro.medium.com/max/1400/1*GQo8qpOMKE_UfBjGm6wkVg.png)
+<img src="./image/hexagon/1676859223543.png" width="600px">
 
 `<u>`The Hexagonal Architecture, also referred to as Ports and Adapters, is an architectural pattern that allows input by users or external systems to arrive into the Application at a Port via an Adapter, and allows output to be sent out from the Application through a Port to an Adapter. This creates an abstraction layer that protects the core of an application and isolates it from external — and somehow irrelevant — tools and technologies.`</u>`
 
@@ -34,7 +34,7 @@ We can see a Port as a technology-agnostic entry point, it determines the interf
 
 An Adapter will initiate the interaction with the Application through a Port, using a specific technology, for example, a REST controller would represent an adapter that allows a client to communicate with the Application. There can be as many Adapters for any single Port as needed without this representing a risk to the Ports or the Application itself.
 
-![](https://miro.medium.com/max/1400/1*RekE4gJTKcRePVFFSqpqHQ.png)
+<img src="./image/hexagon/1676859295528.png" width="600px">
 
 # Application
 
@@ -42,7 +42,7 @@ The Application is the core of the system, it contains the Application Services 
 
 When paired with Domain-Driven Design, the Application, or Hexagon, contains both the Application and the Domain layers, leaving the User Interface and Infrastructure layers outside.
 
-![](https://miro.medium.com/max/1400/1*mGLO5IfhJv4o0NYOAZI60A.png)
+<img src="./image/hexagon/1676859348971.png" width="600px">
 
 # Why a Hexagon?
 
@@ -60,7 +60,7 @@ When it comes to implementation, there are a couple of important details that sh
 - Driving Adapters will use a Port and an Application Service will implement the Interface defined by the Port, in this case both the Port’s interface and implementation are inside the Hexagon.
 - Driven adapters will implement the Port and an Application Service will use it, in this case the Port is inside the Hexagon, but the implementation is in the Adapter, therefore outside of the Hexagon.
 
-![](https://miro.medium.com/max/1400/1*90nuqeg3RNdK9S-KhFlIag.png)
+<img src="./image/hexagon/1676859408848.png" width="600px">
 
 # Dependency Inversion（依赖反转) in the Hexagonal Architecture Context
 
