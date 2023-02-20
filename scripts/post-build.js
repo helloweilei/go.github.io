@@ -5,6 +5,13 @@ let htmlContent = fs
   .readFileSync(path.resolve(__dirname, '../dist/index.html'))
   .toString();
 
+let jsContent = fs
+  .readFileSync(path.resolve(__dirname, '../dist/umi.js'))
+  .toString()
+  .replace(/static\//g, 'dist/static/');
+
+fs.writeFileSync(path.resolve(__dirname, '../dist/umi.js'), jsContent);
+
 htmlContent = htmlContent
   .replace('umi.css', 'dist/umi.css')
   .replace('umi.js', 'dist/umi.js')
