@@ -1,5 +1,5 @@
 ---
-IDEA常用配置
+title: IDEA常用配置
 ---
 
 ### 展开 Java 文件中的 import \* 🐝
