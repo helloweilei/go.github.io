@@ -1,5 +1,5 @@
 ---
-Dependency Injection
+title: Dependency Inject
 ---
 ### Best Practices
 
