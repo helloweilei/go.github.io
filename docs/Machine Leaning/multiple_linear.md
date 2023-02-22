@@ -108,6 +108,25 @@ print(regressor_OLS.summary())
 
 In R:
 
-```
+```R
+dataset = read.csv("50_Startups.csv")
+dataset$State = factor(dataset$State, levels = c('New York', 'Florida', 'California'),
+                 labels = c(1, 2, 3))
 
+# 分割数据集
+library(caTools)
+split = sample.split(dataset$Profit, SplitRatio = 0.7)
+train_set = subset(dataset, split == TRUE)
+test_set = subset(dataset, split == FALSE)
+
+# the formula can be replaced with `Profit ~ .`
+regressor = lm(Profit ~ R.D.Spend + Administration + Marketing.Spend + State, data = train_set)
+print(summary(regressor))
+
+# 对测试集数据进行预测
+y_pred = predict(regressor, newdata = test_set)
+
+# 反向淘汰
+regressor = lm(Profit ~ R.D.Spend + Administration + Marketing.Spend, data = train_set)
+print(summary(regressor))
 ```
