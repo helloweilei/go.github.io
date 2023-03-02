@@ -16,7 +16,7 @@ title: Dependency Inject
 
 ### Bean的life cycle
 
-![Spring Bean Life Cycle](https://howtodoinjava.com/wp-content/uploads/Spring-bean-life-cycle.png)
+![1677547693672](./image/di/1677547693672.png)
 
 ### Customerize the Bean Life Cycle
 
