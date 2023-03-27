@@ -65,3 +65,43 @@ var VSHADER_SOURCE = `
    gl.enableVertexAttribArray(a_TextureCoord);
    ```
 4. 配置和加载纹理
+
+   - 创建纹理对象， 纹理对象用于管理纹理
+
+     ```js
+     var textute = gl.createTexture();
+     ```
+   - 获取着色器变量u_Sampler(取样器的位置)，以及加载图片
+
+     ```js
+     var u_Sampler = gl.getUniformLocation(gl.program, 'u_Sampler');
+     var image = new Image();
+     image.onlocad = function() {
+     	loadTexture();
+     }
+     image.src = 'path/to/image';
+     ```
+   - 配置纹理（实现loadTexture()函数）
+
+     ```js
+     function loadTexture() {
+     	// 对纹理对象进行Y轴反转
+     	gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1);
+     	// 开启0号纹理单元
+     	gl.activeTexture(gl.TEXTURE0);
+     	// 绑定纹理对象
+     	gl.bindTexture(gl.TEXTURE_2D, texture);
+     	// 配置纹理参数
+     	gl.texParameteri(gl.TEXTURE_2D, gl.MIN_FILTER, gl.LINEAR);
+     	// 配置纹理图像
+     	gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, image);
+     	// 将0号纹理对象传递给变量u_Sampler
+     	gl.uniform1i(u_Sampler, 0);
+     }
+     ```
+
+     - Y轴反转：图片的Y坐标与纹理坐标系相反；
+     - 纹理单元：用于同时使用多个纹理，每一个纹理单元通过编号管理一张纹理图像；
+     - 纹理对象：WebGL中不能直接操作纹理对象，需要先绑定到纹理单元，然后通过操作纹理单元来操作纹理对象；
+     - 配置纹理参数：gl.texParameteri(target, pname, param);
+     - 专用于纹理的数据类型： sampler2D（绑定到gl.TEXTURE_2D）、samplerCube（绑定到gl.TEXTURE_CUBE_MAP）；
