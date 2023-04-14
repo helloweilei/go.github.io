@@ -43,6 +43,8 @@ var VSHADER_SOURCE = `
    	}
    `;
    ```
+
+   内置函数texture2D(sampler, coord)用于抽取纹素颜色, 参数sampler和coord分别用于指定纹理单元和纹理坐标。
 3. 设置纹理坐标，在这里将顶点坐标和纹理坐标保存在同一个缓冲区，然后分别获取a_Position和a_TextureCood变量的位置，设置坐标并启用：
 
    ```js
@@ -105,3 +107,47 @@ var VSHADER_SOURCE = `
      - 纹理对象：WebGL中不能直接操作纹理对象，需要先绑定到纹理单元，然后通过操作纹理单元来操作纹理对象；
      - 配置纹理参数：gl.texParameteri(target, pname, param);
      - 专用于纹理的数据类型： sampler2D（绑定到gl.TEXTURE_2D）、samplerCube（绑定到gl.TEXTURE_CUBE_MAP）；
+   - 对程序做如下修改可实现repeat效果：
+
+     ```js
+     var verticesTexCoords = new Float32Array([
+     	-0.5,  0.5, -0.3, 1.7,
+     	-0.5, -0.5, -0.3, -0.2,
+     	0.5, 0.5, 1.7, 1.7,
+     	0.5, -0.5, 1.7, -0.2
+     ]);
+
+     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT);
+     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.REPEAT);
+     ```
+
+### 使用多幅纹理
+
+与前面的代码主要有以下几点区别：
+
+- 片元着色器可以访问两个纹理；
+- 片元的颜色由两个纹理的纹素共同决定；
+- initTexture()函数创建了两个纹理；
+
+代码片段：
+
+1. 片元着色器：
+
+```c
+uniform sampler2D u_Sampler2;
+// ...
+vec4 color1 = texture2D(u_Sampler2, v_TextureCoord);
+// ...
+gl_FragColor = color0 * color1;
+```
+
+2. initTextre() 函数：
+
+```js
+var texture1 = gl.createTexture();
+// ...
+var u_Sampler1 = gl.getUniformLocation(gl.program, 'u_Sampler1');
+// ...
+```
+
+3. loadTexture() 函数修改类似，分别开启不同的纹理单元并传递给对应的变量；
