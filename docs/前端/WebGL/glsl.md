@@ -129,3 +129,57 @@ v3b = m3 * v3a;
 ```
 
 ### 结构体
+
+```c
+struct light {
+	vec4 color;
+	vec3 position
+}
+light l1;
+light l2;
+```
+
+#### 赋值与构造
+
+```c
+l1 = light(vec4(1.0, 0.0, 0.0, 1.0), vec3(0.0, 1.0, 0.0));
+```
+
+#### 访问成员
+
+```c
+vec4 color = l1.color;
+vec3 postion = l1.position;
+```
+
+#### 运算符
+
+- =：赋值
+- ==, !=：比较，当且仅当所有成员都相等时==返回true
+
+### 数组
+
+同c中的数组类似，不能在申明时初始化，必须显式的对每一个元素进行初始化，只支持索引运算符；
+
+```js
+float floatArr[4];
+vec4 vec4Arr[size];
+floatArr[0] = 3.14;
+```
+
+### 取样器
+
+取样器时GLSL ES内置类型，只能通过该类型访问纹理；
+
+两种类型的取样器：sampler2D, samplerCube;
+
+取样器只能是uniform类型的变量，或者访问纹理函数(texture2D())的参数；
+
+```c
+uniform sampler2D u_Sampler;
+```
+
+只能将纹理单元编号赋值给取样器，取值受编号数量的限制。除了赋值和比较，取样器不能作为操作数参与运算。
+
+
+### 程序流程控制：分支与循环
