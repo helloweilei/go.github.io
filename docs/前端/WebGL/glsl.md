@@ -285,9 +285,55 @@ uniform sampler2D u_Sampler;
   - transpose(m)：返回矩阵m的转置矩阵
 
 ### 全局变量和局部变量
+
   类似于javascript，定义在函数外的变量为全局变量，定义在函数内的变量为局部变量。
 
 ### 存储限定词
+
 - const: 必须在申明是初始化，之后不能修改；
 - attribute: 只能出现在顶点着色器中，且必须声明为全局变量，同来表示逐顶点信息；
-- 
+- uniform: 全局变量， 不能修改。顶点着色器和片元着色器定义的同名的uniform变量可以被共享；
+- varying: 用与顶点着色器向片元着色器传递顶点数据，在两种着色器中必须同名同类型。并非一一传递，根据绘制图形的不同会做插值。
+
+### 精度限定字
+
+- highp
+- mediump
+- lowp
+
+  示例：
+
+```c
+lowp int a;
+mediump float b;
+// 使用precision关键字
+precision mediump float;
+float c; // mediup精度
+```
+
+着色为每种类型指定了默认的精度，除了片元着色器中的float类型，所以需要手动指定，否则会报错。
+
+### 预处理指令
+
+常用预处理指令：
+
+- #if/#endif
+- #ifdef/#endif
+- #ifndef/#endif
+- #define/#undef
+- #version 100/101   // 指定版本，只能出现在文件最开始
+
+预定义指令：
+
+- GL_ES
+- GL_FRAGMENT_PRECISION_HIGH
+
+示例：
+
+```c
+#ifdef GL_ES
+#ifdef GL_FRAGMENT_PRECISION_HIGH
+precision highp float;
+#endif
+#endif
+```
