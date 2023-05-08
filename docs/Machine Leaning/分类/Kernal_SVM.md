@@ -38,3 +38,41 @@ title: Kernal SVM
 更复杂的场景可以考虑使用和函数的线性组合：
 
 ![1682400913260](./image/Kernal_SVM/1682400913260.png)
+
+### 核函数分类
+
+- 高斯RBF核函数
+- Digmoid Kernal
+
+  <img src="./image/Kernal_SVM/1683273883979.png" width="400" />
+
+  <img src="./image/Kernal_SVM/1683273924997.png" width="400" />
+- Polynomial Kernal
+
+  <img src="./image/Kernal_SVM/1683273975313.png" width="400" />
+
+  <img src="./image/Kernal_SVM/1683274012795.png" width="400" />
+
+### 代码示例
+
+- Python
+
+```python
+# diff with SVM
+from sklearn.svm import SVC
+classifier = SVC(kernel = 'rbf', random_state = 0)
+classifier.fit(X_train, y_train)
+```
+
+- R
+
+```r
+  # install.packages('e1071') 
+  library(e1071)
+  classifier = svm(formula = Purchased ~ .,
+                   data = training_set,
+                   type = 'C-classification',
+                   kernel = 'radial')
+```
+
+![1683276572766](./image/Kernal_SVM/1683276572766.png)
