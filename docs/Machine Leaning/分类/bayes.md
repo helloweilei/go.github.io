@@ -51,6 +51,9 @@ classifier.fit(X_train, y_train)
 R:
 
 ```r
+# Encoding the target feature as factor
+dataset$Purchased = factor(dataset$Purchased, levels = c(0,1))
+# ...
 library(e1071)
 classifier = naiveBayes(x = training_set[-3],
                         y = training_set$Purchased)
