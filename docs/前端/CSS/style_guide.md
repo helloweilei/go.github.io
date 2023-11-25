@@ -1,10 +1,21 @@
 ---
 title: 常见问题
 ---
-
-## 防止外边距折叠
+### 防止外边距折叠
 
 - 为容器元素设置 overflow:auto(或除 visible 的其他值)；
 - 在外边距之间边框或内边距；
 - 容器元素为浮动元素，内联元素，绝对定位或固定定位时；
 - 容器为 flex 布局时，flex 容器内的元素不会折叠；
+
+### 省略文本
+
+```scss
+.textHide {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+```
