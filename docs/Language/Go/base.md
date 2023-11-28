@@ -109,3 +109,63 @@ print(myInt); // 12
 - 除main外包名应该与包含它的目录名相同；
 - 可以通过 `go install` 将编译好的包存储在bin或pkg目录（取决于是否是main包）；
 - `go doc`显示包的文档，`godoc -http:=8080`本地启动Web服务器查看文档；
+
+## 数组
+
+```go
+// 声明并创建数组，数组长度之后不能在修改
+var numbers [3]int;
+numbers[0] = 1;
+numbers[1] = 2;
+for i := 0; i < len(numbers); i++ {
+	fmt.Println(numbers[i]);
+}
+```
+
+### 声明并初始化数组
+
+```go
+ages := [3]int{26, 27, 28};
+```
+
+### 使用range遍历数组
+
+```go
+ages := [3]int{26, 27, 28};
+for i, age := range ages {
+	fmt.Println(i, age);
+}
+```
+
+## 读取文件
+
+```go
+package readfile
+
+import (
+	"bufio"
+	"fmt"
+	"os"
+	"strconv"
+)
+
+func GetFloats(name string) ([]float64, error) {
+	file, err := os.Open(name);
+	var floats = make([]float64, 0);
+	if err != nil {
+		fmt.Printf("Open file %s failed.", name);
+		return floats, err;
+	}
+	scanner := bufio.NewScanner(file);
+	for scanner.Scan() {
+		var num, err = strconv.ParseFloat(scanner.Text(), 64);
+		if err != nil {
+			println("invalid data format");
+			return floats, err;
+		}
+		floats = append(floats, num);
+	}
+
+	return floats, nil;
+}
+```
