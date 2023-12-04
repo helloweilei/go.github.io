@@ -24,9 +24,13 @@
   },
   "devDependencies": {
     "dumi": "^1.0.14",
+    "husky": "^7.0.0",
     "lint-staged": "^10.0.7",
     "prettier": "^2.2.1",
-    "yorkie": "^2.0.0",
-    "husky": "^7.0.0"
+    "yorkie": "^2.0.0"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   }
 }
