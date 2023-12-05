@@ -33,3 +33,55 @@ fn main() {
 ```
 
 ### 函数中的所有权
+
+- 函数传参时会转移所有权
+- 返回函数的参数或函数内的局部变量时会转移所有权
+
+示例一：
+
+```rust
+fn main() {
+  let s1: String = String::from("this is me, ");
+  let s2: &str = "Nouman";
+  some_function(s1, s2); // error: borrow of moved value: `s1`
+  println!("{} {}", s1, s2);
+}
+
+fn some_function(a1: String, a2: &str) {
+  println!("{} {}", a1, a2);
+}
+```
+
+示例二：
+
+```rust
+let mut my_vec = vec![1, 2, 3, 4, 5];
+let mut temp;
+
+while !my_vec.is_empty() {
+  // temp = my_vec; // Something wrong on this line
+  temp = &my_vec;
+  println!("Elements in temporary vector are: {:?}", temp);
+
+
+  if let Some(last_element) = my_vec.pop() { // pop() is used to remove an element from the vec
+      println!("Popped element: {}", last_element);
+  }
+}
+```
+
+示例三：
+
+```rust
+fn main() {
+  {
+      let str1 = generate_string();
+  }
+  let str2 = str1;   // error: cannot found value `str1` in this scope
+}
+
+fn generate_string() -> String {
+  let some_string = String::from("I will generate a string");
+  some_string
+}
+```
