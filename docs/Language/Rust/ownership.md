@@ -85,3 +85,39 @@ fn generate_string() -> String {
   some_string
 }
 ```
+
+### 借用（引用）
+
+借用类似于创建指向数据的指针，借用不会改变所有权。相比于复制，借用不需要拷贝堆中的数据，因此可以减少堆内存的消耗。
+
+借用规则：
+
+- 同一时间只能有一个可变引用或多个不可变引用；
+- 引用必须总是有效的（避免悬挂指针的问题）；
+
+```rust
+let mut s1 = String::from("hello world");
+let mut s2 = &mut s1;
+let mut s3 = &mut s1; // cannot borrow `s1` as mutable more than once at a time
+
+print!("s1: {}, s2: {}", s2, s3);
+```
+
+示例一：
+
+```rust
+fn main() {
+    let mut some_vec = vec![1, 2, 3];
+    let first = get_first_element(&some_vec); // immutable borrow occurs here
+    // some_vec.push(4); // mutable borrow occurs here
+    // println!("The first number is: {}", first);
+
+    // 交换代码的顺序
+    println!("The first number is: {}", first);
+    some_vec.push(4);
+}
+
+fn get_first_element(num_vec: &Vec<i32>) -> &i32 {
+    &num_vec[0]
+}
+```
