@@ -1,8 +1,6 @@
 ---
 title: Angular2 动态加载外部组件
 ---
----
-
 ## 方法一：使用Compiler动态解析模块
 
 ```ts
