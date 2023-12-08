@@ -58,3 +58,75 @@ export function useThrottle(fn, delay) {
   return ref.current;
 }
 ```
+
+## 防抖（debounce）
+
+防抖的一个使用场景时搜索功能，当输入框的内容发生变化时就调用接口搜索关键字，当快速输入搜索某个单词时，每输入一个字母都会执行搜索，而实际有效的只是最后一次搜索，这就造成了不必要的接口调用，浪费了带宽和影响的性能。
+
+使用防抖功能可以在连续调用某个函数时只让最后一次生效，从而减少不必要的开销。
+
+### 实现
+
+JS实现：
+
+```js
+export function debounce(fn, delay) {
+  let timer = null;
+  return function debounceFn(...args) {
+    if (timer) {
+      clearTimeout(timer);
+    }
+    timer = setTimeout(() => {
+      fn.apply(this, args);
+    }, delay);
+  }
+}
+```
+
+在React Hook中的使用：
+
+```js
+export default function useDebounce(fn, delay) {
+
+  const ref = useRef(debounce(fn, delay));
+
+  return ref.current;
+
+}
+```
+
+## 结论
+
+以上就是节流和防抖功能的简单介绍，实际使用中可能还要考虑更多的因素，比如对于节流，在时间间隔之内的函数是不会执行的，但是我们有时需要最后一个函数调用必须要被执行（比如需要在mousemove事件中记录鼠标的最新位置，如果节流导致最后几次函数调用没有被执行，那记录的鼠标位置就不是最新的），因此需要增加额外的代码区控制。
+
+关于节流问题的参考实现如下：
+
+```js
+export function throttle2(fn, delay) {
+  let lastTime = 0;
+  let lastFn = null;
+  let runLastFnTimer = null;
+
+  return function throttleFn(...args) {
+    const timeElapsed = Date.now() - lastTime;
+    if (timeElapsed > delay) {
+      fn.apply(this, args);
+      lastTime = Date.now();
+      lastFn = null;
+      if (runLastFnTimer) {
+        clearTimeout(runLastFnTimer);
+      }
+      runLastFnTimer = setTimeout(() => {
+        if (lastFn) {
+          // eslint-disable-next-line no-console
+          console.log("trailing fun called");
+          lastFn();
+        }
+        runLastFnTimer = null;
+      }, delay * 2); // 参考值，延迟时间需要略大于delay
+    } else {
+      lastFn = fn.bind(this, ...args);
+    }
+  }
+}
+```
