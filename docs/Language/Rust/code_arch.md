@@ -20,3 +20,25 @@ Package、Create和Module的关系如下图：
   ```
 
 ## Module
+
+示例：
+
+```rust
+pub mod seasons {
+  pub enum Season {
+    Spring,
+    Summer,
+    Autumn,
+    Winter
+  }
+
+  pub fn is_holiday(season: &Season) -> bool {
+    match season {
+        Season::Summer => true,
+        _ => false
+    }
+  }
+}
+
+pub use seasons::is_holiday; // re-exporting
+```

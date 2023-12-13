@@ -218,4 +218,18 @@ func GetFloats(name string) ([]float64, error) {
 
 	return floats, nil;
 }
+// read all files in dir
+func ReadFiles(dir string, fileList *[]string) {
+	var files, err = os.ReadDir(dir);
+	if (err != nil) {
+		panic("read dir failed");
+	}
+	for _, file := range files {
+		if file.IsDir() {
+			ReadFiles(path.Join(dir, file.Name()), fileList);
+		} else {
+			*fileList = append(*fileList, file.Name());
+		}
+	}
+}
 ```
