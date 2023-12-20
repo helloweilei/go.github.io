@@ -65,3 +65,45 @@ this.animate(selector, keyframes, duration, ScrollTimeline)
 > Taro中获取page实例的方法：
 >
 > `const page = Taro.getCurrentPages().pop();`
+
+
+
+## 获取状态栏和导航栏的高度
+
+很多时候我们开发微信小程序，都需要先知道状态栏和导航栏的高度，才能去做其他功能。
+
+### 获取微信小程序状态栏高度
+
+用 `wx.getSystemInfoSync()`【官方文档】获取系统信息，里面有个参数：`statusBarHeight（状态栏高度）`，是我们后面计算整个导航栏的高度需要用到的。
+
+```javascript
+let res = wx.getSystemInfoSync();
+let statusHeight = res.statusBarHeight; // 注意：此时获取到的值的单位为 'px'
+```
+
+### 获取微信小程序导航栏高度
+
+#### 1）方法一（个人不赞同该方法的）
+
+很多人使用获取胶囊布局信息 ，`wx.getMenuButtonBoundingClientRect()`，**根据胶囊高度及上下位置，结合状态栏高度即可算出导航栏高度。**
+
+```javascript
+let res = wx.getSystemInfoSync(); //系统信息
+let custom = wx.getMenuButtonBoundingClientRect() //胶囊按钮位置信息 { left, top, right, bottom, width, height... }
+let navBarHeight = (custom.top - res.statusBarHeight) * 2 + custom.height //计算得出导航栏高度
+```
+
+**该方法原理：**
+
+> **把微信小程序的胶囊按钮位于导航栏中间来使用，利用胶囊距离顶部的距离 - 状态栏高度，得出胶囊距离导航栏顶部的距离，认为胶囊距离导航栏底部也是这个距离，所以乘以2；再加上胶囊按钮的高度得出导航栏整体高度**
+
+#### 2）方法二（个人项目中用的方法）
+
+**计算公式：顶部导航栏总高度 = 状态栏高度 + 44。**
+
+```javascript
+let res = wx.getSystemInfoSync()
+let navBarHeight = res.statusBarHeight + 44 //顶部状态栏+顶部导航，大部分机型默认44px
+uni.setStorageSync('statusBarHeight', res.statusBarHeight)  //状态栏高度
+uni.setStorageSync('navBarHeight', navBarHeight)  //状态栏+导航栏高度
+```
