@@ -1,3 +1,6 @@
+---
+title: 测试
+---
 ### Test panic
 
 ```rust

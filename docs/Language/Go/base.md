@@ -233,3 +233,107 @@ func ReadFiles(dir string, fileList *[]string) {
 	}
 }
 ```
+
+## 测试
+
+### 约定
+
+- 测试文件以_test.go结尾
+- 测试未导出的函数和类型时需要将测试与带测试的函数或类型放在同一文件中
+- 测试文件中需要引入 `testing`包
+- 测试函数的函数名以 `Test`开头，且文件接受单个参数 `(t tesing.T)`
+
+### 运行测试
+
+```shell
+go test
+go test -run some_name // 运行函数名包含some_name的测试函数
+```
+
+### 示例
+
+```go
+package main_test
+
+import (
+	"errors"
+	"testing"
+)
+
+func div(a float32, b float32) (float32, error) {
+	if (b == 0) {
+		return 0, errors.New("divider can not be zero.")
+	}
+
+	return a / b, nil
+}
+
+func TestDivide(t *testing.T) {
+	var result, err = div(10.0, 0.0)
+
+	if err == nil {
+		t.Errorf("error is: %s", err)
+	}
+
+	if (result != 0) {
+		t.Error("should return 0")
+	}
+}
+```
+
+## Web开发
+
+简单示例：
+
+```go
+package main
+
+import (
+	"html/template"
+	"log"
+	"net/http"
+)
+
+type Person struct {
+	Name string
+	Age int
+	Gender string
+}
+
+func DetailHandler(response http.ResponseWriter, request *http.Request) {
+	var temp, err = template.ParseFiles("personDetail.html")
+	if err != nil {
+		response.WriteHeader(500)
+		response.Write([]byte("Error happened"))
+	}
+
+	temp.Execute(response, Person{
+		Name: "Charlie",
+		Age: 30,
+		Gender: "male",
+	})
+}
+
+func main() {
+	http.HandleFunc("/detail", DetailHandler)
+	log.Fatal(http.ListenAndServe(":8080", nil)) // nil表示用HandleFunc注册时Handler处理请求
+}
+```
+
+模版文件：
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Person Detail</title>
+</head>
+<body>
+  <h2>{{ .Name }}</h2>
+  <p>age: {{.Age}}</p>
+  <p>gender: {{ .Gender }}</p>
+</body>
+</html>
+```
