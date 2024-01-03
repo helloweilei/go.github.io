@@ -40,7 +40,7 @@ title: Position Sticky
 
 在上面的例子中当页面滚动时header元素始终保持页面的顶部，效果如下：
 
-![1702996147961](image/sticky/1702996147961.png)
+![1702996147961](./image/sticky/1702996147961.png)
 
 ### 注意事项
 
@@ -70,4 +70,4 @@ title: Position Sticky
 
 效果如下：
 
-![1702997746494](image/sticky/1702997746494.png)
+![1702997746494](./image/sticky/1702997746494.png)
