@@ -42,3 +42,49 @@ print(avg.__closure__[0].cell_contents,
 闭包是一种函数，该函数保留了定义函数时存在的自由变量的绑定，函数调用时即使离开了作用域依然可以使用绑定。
 
 ## 装饰器
+
+### classmethod与staticmethod的区别
+
+在Python中，装饰器是一种设计模式，它可以用来修改或增强函数、方法或类的行为。装饰器通常用于在不修改原始代码的情况下，为函数或方法添加额外的功能，如日志记录、性能测试、事务处理等。
+
+在Python中，装饰器可以使用类方法（classmethod）或静态方法（staticmethod）。这两种方法都用于将装饰器与类关联起来，但它们之间有一些重要的区别。
+
+1. 类方法（classmethod）：
+   类方法是与类关联的函数，而不是与类的实例关联。类方法使用@classmethod装饰器定义，第一个参数必须是类本身（通常命名为cls）。类方法可以使用cls参数来访问类的属性和其他方法。类方法通常用于实现与类相关的功能，而不是与类的实例相关的功能。
+
+例如，假设我们有一个装饰器用于记录函数执行的时间：
+
+```python
+import time
+  class Timer:
+      @classmethod
+      def decorator(cls, func):
+          def wrapper(*args, **kwargs):
+              start_time = time.time()
+              result = func(*args, **kwargs)
+              end_time = time.time()
+              print(f"Function {func.__name__} took {end_time - start_time} seconds to execute.")
+              return result
+          return wrapper
+```
+
+2. 静态方法（staticmethod）：
+   静态方法是与类关联的函数，不需要与类的实例关联。静态方法使用@staticmethod装饰器定义，不需要特殊的第一个参数。静态方法不能使用self参数来访问类的属性和其他方法。静态方法通常用于实现与类相关但不依赖于实例的状态的功能。
+
+例如，假设我们有一个装饰器用于验证函数输入：
+
+```python
+class Validator:
+      @staticmethod
+      def decorator(func):
+          def wrapper(*args, **kwargs):
+              for arg in args:
+                  if not isinstance(arg, int):
+                      raise ValueError("All arguments must be integers.")
+              result = func(*args, **kwargs)
+              return result
+          return wrapper
+```
+
+总结：
+类方法和静态方法的区别在于它们如何与类关联以及它们如何使用。类方法使用cls参数来访问类，可以使用cls参数来访问类的属性和其他方法。它们通常用于实现与类相关的功能。静态方法不需要特殊的第一个参数，不能使用self参数来访问类的属性和其他方法。它们通常用于实现与类相关但不依赖于实例的状态的功能。
