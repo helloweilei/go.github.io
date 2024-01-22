@@ -43,9 +43,62 @@ print(avg.__closure__[0].cell_contents,
 
 ## 装饰器
 
-### classmethod与staticmethod的区别
+### 简介
 
 在Python中，装饰器是一种设计模式，它可以用来修改或增强函数、方法或类的行为。装饰器通常用于在不修改原始代码的情况下，为函数或方法添加额外的功能，如日志记录、性能测试、事务处理等。
+
+### 定义一个装饰器
+
+装饰器本质上就是一个函数，接受被装饰的函数作为参数，装饰器需要返回一个新的函数替换原函数（也可以直接返回原函数）。下面定义一个装饰器用于在函数执行时打印参数：
+
+```python
+import functools
+
+def print_params(func):
+    @functools.wraps(func) # 将原函数的自省信息拷贝到新函数
+    def new_func(*args):
+        for i, name in enumerate(func.__code__.co_varnames):
+            print("{}: {}".format(name, args[i]))
+        return func(*args)
+    return new_func
+
+# 使用装饰器
+@print_params
+def add(val1, val2):
+    return val1 + val2
+```
+
+### 标准库中的装饰器
+
+- functools.lru_cache: 为函数提供缓存能力
+- functools.singledispatch: 将普通函数变成泛函数；根据第一个参数的类型以不同的方式执行相同操作的一组函数。下面的示例中定义的htmlize函数对不同类型的参数执行不同的格式化处理：
+
+  ```python
+  from functools import singledispatch
+  ```
+
+> 可以同时为一个函数指定多个装饰器，例如：`@d1 @d2 def func()`等价与 `d1(d2(func))`。
+
+### 参数化装饰器
+
+接受参数并返回一个装饰器的工厂函数。
+
+例如：
+
+```python
+def log(level='Info'):
+    def decorator(func):
+        print("{}: Calling fun '{}'".format(level, func.__name__))
+        return func
+    return decorator
+
+
+@log(level='Debug')
+def add(val1, val2):
+    return val1 + val2
+```
+
+### classmethod与staticmethod的区别
 
 在Python中，装饰器可以使用类方法（classmethod）或静态方法（staticmethod）。这两种方法都用于将装饰器与类关联起来，但它们之间有一些重要的区别。
 
