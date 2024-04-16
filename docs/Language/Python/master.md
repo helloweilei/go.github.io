@@ -141,3 +141,38 @@ class Validator:
 
 总结：
 类方法和静态方法的区别在于它们如何与类关联以及它们如何使用。类方法使用cls参数来访问类，可以使用cls参数来访问类的属性和其他方法。它们通常用于实现与类相关的功能。静态方法不需要特殊的第一个参数，不能使用self参数来访问类的属性和其他方法。它们通常用于实现与类相关但不依赖于实例的状态的功能。
+
+### 上下文管理器
+
+需要实现上下文管理器的协议，包含`__enter__`, `__exit__`两个方法，在`with`语句中会首先调用`__enter__`方法，方法的返回值会赋值给as后面的变量。在`with`语句块结束是会调用管理器的`__exit__`方法，主要用于执行一些清理工作。
+
+```python
+import sys
+
+class ContextManager:
+    def __init__(self, msg):
+        self.msg = msg
+        self.oroginal_write = sys.stdout.write
+        sys.stdout.write = self._proxy_write
+
+    def _proxy_write(self, msg):
+        self.oroginal_write(msg[::-1])
+
+    def __enter__(self):
+        return self.msg
+    
+    def __exit__(self, exc_type, *others):        
+        sys.stdout.write = self.oroginal_write
+        print("exiting from context...")
+
+'''
+output:
+dlroW olleH
+exiting from context...
+Hello World
+'''
+with ContextManager("Hello World") as msg:
+    print(msg)
+
+print(msg)
+```
