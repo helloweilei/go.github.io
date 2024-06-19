@@ -292,9 +292,107 @@ npx nest generate resource
 
 #### 定义 `GET /articles` Endpoint
 
+controller和service中的代码如下：
+
+```ts
+  // articles.controller.ts
+  @Get()
+  findAll() {
+    return this.articlesService.findAll();
+  }
+
+  // articles.service.ts
+  findAll() {
+    return this.prisma.article.findMany();
+  }
+```
+
 #### 定义 `POST /articles` Endpoint
 
+首先需要定于 `CreateArticleDto`类型，DTO(Data Transfer Object)描述了数据在网络中传输的格式。在这里表示创建article需要的数据类型：
+
+```ts
+export class CreateArticleDto {
+  @ApiProperty({ required: true })
+  title: string;
+
+  @ApiProperty({ nullable: true })
+  content?: string;
+
+  @ApiProperty({ required: false, default: false })
+  isPublished: boolean;
+}
+```
+
+> `ApiProperty`装饰器帮助swagger模块识别请求参数的字段及类型。
+
+接下来就可以在controller和service中使用该类型定义：
+
+```ts
+// article.controller.ts
+@Post()
+create(@Body() createArticleDto: CreateArticleDto) {
+  return this.articlesService.create(createArticleDto);
+}
+
+// article.servive.ts
+create(createArticleDto: CreateArticleDto) {
+  return this.prisma.article.create({ data: createArticleDto });
+}
+```
+
+最新的swagger有了关于请求参数类型的提示：
+
+![1718801551748](image/nestjs/1718801551748.png)
+
 #### 定义Response 的类型
+
+为了在swagger中能够得到响应类型的提示，需要一下几步：
+
+1. 在 `articles/entities/article.entity.ts`文件中定义Article：
+   ```ts
+   import { ApiProperty } from '@nestjs/swagger';
+
+   export class Article {
+     @ApiProperty()
+     id: number;
+
+     @ApiProperty()
+     title: string;
+
+     @ApiProperty({ nullable: true })
+     content?: string;
+
+     @ApiProperty()
+     createdAt?: Date;
+
+     @ApiProperty()
+     updatedAt?: Date;
+
+     @ApiProperty()
+     isPublished: boolean;
+   }
+   ```
+
+    2. 在controller中方法上增加装饰器
+
+```ts
+@Post()
+  @ApiCreatedResponse({ type: Article })
+  create(@Body() createArticleDto: CreateArticleDto) {
+    return this.articlesService.create(createArticleDto);
+  }
+
+  @Get()
+  @ApiOkResponse({ type: Article, isArray: true })
+  findAll() {
+    return this.articlesService.findAll();
+  }
+```
+
+更新后的swagger中的效果如下：
+
+![1718802499682](image/nestjs/1718802499682.png)
 
 #### Swagger API 分组
 
