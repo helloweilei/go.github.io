@@ -11,7 +11,7 @@ npx @nestjs/cli new rest-api
 
 项目的目录结构如下：
 
-![1718760575353](image/nestjs/1718760575353.png)
+![1718760575353](././image/nestjs/1718760575353.png)
 
 根据提示运行命令启动项目(示例中的包管理工具为pnpm)：
 
@@ -39,7 +39,7 @@ $ pnpm run start
        volumes:
          - postgres:/var/lib/postgresql/data
        ports:
-         - '5432:5432'
+         - '5432:5432'./image/nestjs
 
    volumes:
      postgres:
@@ -47,7 +47,7 @@ $ pnpm run start
 
    2. 在主目录中运行命令 `docker-compose up -d`创建postgresql容器，-d参数表示关闭terminal容器依然在后台运行。运行成功后可以看到类似下面的输出：
 
-![1718762498936](image/nestjs/1718762498936.png)
+![1718762498936](./image/nestjs/1718762498936.png)
 
 ### 设置Prisma
 
@@ -178,9 +178,9 @@ CREATE UNIQUE INDEX "Article_title_key" ON "Article"("title");
 
    在 `package.json`中加入一下设置，提示prisma cli在执行seed命令时需要执行的脚本：
 
-   ![1718778200307](image/nestjs/1718778200307.png)
+   ![1718778200307](./image/nestjs/1718778200307.png)
 
-   运行命令 `npx prisma db seed`执行脚本为数据库加入数据，运行结果如下：![1718778396191](image/nestjs/1718778396191.png)
+   运行命令 `npx prisma db seed`执行脚本为数据库加入数据，运行结果如下：![1718778396191](./image/nestjs/1718778396191.png)
 
 > 通过运行prisma cli提供的studio命令，打开可视化界面查看数据库数据 `npx prisma studio`。关于seed的更多信息参考[Prisma Docs](https://www.prisma.io/docs/orm/prisma-migrate/workflows/seeding).
 
@@ -195,7 +195,7 @@ npx nest generate service prisma
 
  新增的文件结构如下：
 
-![1718779762299](image/nestjs/1718779762299.png)
+![1718779762299](./image/nestjs/1718779762299.png)
 
 以下是prisma.service.ts的内容：
 
@@ -256,7 +256,7 @@ module提供了PrismaService的单例，任何导入该module的模块都可以�
 
   启动服务后访问 `http://localhost:3000/swagger`, 查看启动后的swagger界面：
 
-![1718782235145](image/nestjs/1718782235145.png)
+![1718782235145](./image/nestjs/1718782235145.png)
 
 ### 在Article Model上执行CRUD操作
 
@@ -276,19 +276,19 @@ npx nest generate resource
 
 新生成的文件结构：
 
-![1718783201910](image/nestjs/1718783201910.png)
+![1718783201910](./image/nestjs/1718783201910.png)
 
 更新后的swagger：
 
-![1718783236961](image/nestjs/1718783236961.png)
+![1718783236961](./image/nestjs/1718783236961.png)
 
 在articles.module.ts文件中导入 `PrismaModule`:
 
-![1718783369774](image/nestjs/1718783369774.png)
+![1718783369774](./image/nestjs/1718783369774.png)
 
 在articles.service.ts文件中注入 `PrismaSerice`服务：
 
-![1718783504809](image/nestjs/1718783504809.png)
+![1718783504809](./image/nestjs/1718783504809.png)
 
 #### 定义 `GET /articles` Endpoint
 
@@ -343,7 +343,7 @@ create(createArticleDto: CreateArticleDto) {
 
 最新的swagger有了关于请求参数类型的提示：
 
-![1718801551748](image/nestjs/1718801551748.png)
+![1718801551748](./image/nestjs/1718801551748.png)
 
 #### 定义Response 的类型
 
@@ -392,10 +392,10 @@ create(createArticleDto: CreateArticleDto) {
 
 更新后的swagger中的效果如下：
 
-![1718802499682](image/nestjs/1718802499682.png)
+![1718802499682](./image/nestjs/1718802499682.png)
 
 #### Swagger API 分组
 
 对 `ArticlesController` class应用装饰器 ` @ApiTags('articles')`，可以实现swagger中对articles相关的API分组，分组后的效果如下：
 
-![1718785447345](image/nestjs/1718785447345.png)
+![1718785447345](./image/nestjs/1718785447345.png)
