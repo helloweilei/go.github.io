@@ -59,6 +59,14 @@ basename /aa/bb/cc.txt .txt # cc
 date +%Y/%m/%d # 2024/07/18, command executed at 18 July, 2024
 ```
 
+3. __cmp__: 文件比较
+
+cmp命令用于比较两个文件的内容，如果文件相同，则不显示任何信息；如果文件不同，则显示第一个不同的位置。cmp命令的语法包括可选的参数，如-l（列出所有不同之处）、-s（不显示错误信息）等.
+
+```shell
+cmp -s file1.txt file2.txt
+```
+
 ### 控制流
 
 #### For 循环
